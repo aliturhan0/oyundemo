@@ -195,6 +195,12 @@ public class EnemyAI : MonoBehaviour
             GameManager.Instance.ZombieKilled();
         }
 
+        // Kombo sayacını artır — zombi öldürme başarısı
+        if (ComboManager.Instance != null)
+        {
+            ComboManager.Instance.RegisterHit();
+        }
+
         // Spawner'a haber ver ki haritada yeni zombiye yer açılsın
         var spawner = FindObjectOfType<ZombieSpawner>();
         if (spawner != null)
