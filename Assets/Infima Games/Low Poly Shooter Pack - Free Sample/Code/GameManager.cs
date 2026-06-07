@@ -97,8 +97,11 @@ public class GameManager : MonoBehaviour
     // WinPanel içindeki "Sonraki Bölüm" butonuna atanacak metod
     public void LoadNextLevel()
     {
+        Debug.Log("LoadNextLevel çağrıldı! Hedef sahne: " + nextSceneName);
         Time.timeScale = 1f;
         AudioListener.pause = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         SceneManager.LoadScene(nextSceneName);
     }
 }
