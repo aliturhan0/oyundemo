@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using InfimaGames.LowPolyShooterPack;
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +29,16 @@ public class GameManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+
+        // EventSystem'i bul ve DeathPanel'in altından kurtarıp Canvas'ın altına taşı
+        var eventSys = FindObjectOfType<UnityEngine.EventSystems.EventSystem>(true);
+        var canvas = FindObjectOfType<Canvas>();
+        if (eventSys != null && canvas != null)
+        {
+            eventSys.transform.SetParent(canvas.transform, true);
+            eventSys.gameObject.SetActive(true);
+            Debug.Log("[GameManager] EventSystem başarıyla Canvas altına taşındı ve butonlar aktifleşti.");
+        }
     }
 
     private void Start()
@@ -77,10 +88,17 @@ public class GameManager : MonoBehaviour
             winMenuPanel.SetActive(true);
         }
 
-        // Oyuncuyu durdur
+        // Oyuncuyu ve girdilerini tamamen durdur
         var player = FindObjectOfType<PlayerHealth>();
         if (player != null)
         {
+            // Character scriptini bul ve fare kilidini kapat
+            var character = player.GetComponent<Character>();
+            if (character != null)
+            {
+                character.enabled = false;
+            }
+
             var components = player.GetComponents<MonoBehaviour>();
             foreach (var comp in components)
             {
@@ -88,8 +106,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // Menü tıklanabilsin diye oyunu dondur
-        Time.timeScale = 0.0001f;
+        // Menü tıklanabilsin diye oyunu dondur ve fareyi serbest bırak
+        Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
