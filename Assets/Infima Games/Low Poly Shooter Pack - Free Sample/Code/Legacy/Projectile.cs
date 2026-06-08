@@ -22,6 +22,8 @@ public class Projectile : MonoBehaviour {
 	public Transform [] dirtImpactPrefabs;
 	public Transform []	concreteImpactPrefabs;
 
+	private bool hasCollided = false;
+
 	private void Start ()
 	{
 		//Grab the game mode service, we need it to access the player character!
@@ -40,6 +42,11 @@ public class Projectile : MonoBehaviour {
 		//Ignore collisions with other projectiles.
 		if (collision.gameObject.GetComponent<Projectile>() != null)
 			return;
+
+		if (hasCollided)
+			return;
+
+		hasCollided = true;
 
 		Debug.Log("Mermi bir seye carpti: " + collision.gameObject.name);
 

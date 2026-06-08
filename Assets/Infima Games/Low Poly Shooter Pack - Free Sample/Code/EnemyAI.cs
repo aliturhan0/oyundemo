@@ -25,6 +25,9 @@ public class EnemyAI : MonoBehaviour
     public float attackHitDelay = 0.5f; // Saldırı başladıktan kaç saniye sonra hasar verilecek
     private bool isAttacking = false;
 
+    [Header("Visual Effects")]
+    public GameObject kanEfektiPrefab; // KAN EFEKTİ İÇİN EKLENEN KUTU
+
     [Header("Audio Settings")]
     public AudioSource audioSource;
     public AudioClip[] ambientSounds;
@@ -54,7 +57,14 @@ public class EnemyAI : MonoBehaviour
     {
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.spatialBlend = 1.0f; // 3D ses
+            audioSource.minDistance = 1.0f;
+            audioSource.maxDistance = 20.0f;
+        }
         
         navAgent.speed = movementSpeed;
         navAgent.stoppingDistance = stoppingDistance;
@@ -157,13 +167,21 @@ public class EnemyAI : MonoBehaviour
         currentHealth -= damageAmount;
         Debug.Log("Zombi vuruldu! Alınan hasar: " + damageAmount + " | Kalan can: " + currentHealth);
 
+        // --- EKLENEN KAN FIŞKIRTMA KODU BAŞLANGICI ---
+        if (kanEfektiPrefab != null)
+        {
+            GameObject kan = Instantiate(kanEfektiPrefab, transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+            Destroy(kan, 1f); 
+        }
+        // --- EKLENEN KAN FIŞKIRTMA KODU BİTİŞİ ---
+
         if (currentHealth <= 0)
         {
             Die();
         }
         else
         {
-            PlayRandomSound(hitSounds); // Vurulma sesi
+            PlayRandomSound(hitSounds); // Vurulma sesi (Senin zaten var olan kodun)
             StartCoroutine(HitRoutine());
         }
     }
@@ -212,7 +230,7 @@ public class EnemyAI : MonoBehaviour
         var colliders = GetComponents<Collider>();
         foreach (var c in colliders) c.enabled = false;
 
-        // Ölüm sesini çal (Hit seslerinden birini kullanabiliriz veya ayrı bir liste açabiliriz)
+        // Ölüm sesini çal
         PlayRandomSound(hitSounds);
 
         // Zombiyi 5 saniye sonra tamamen yok et ki oyun kasmasın
