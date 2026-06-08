@@ -161,11 +161,14 @@ MonoBehaviour:
   attackDamage: 10
   attackCooldown: 2
   attackHitDelay: 0.5
+  kanEfektiPrefab: {fileID: 5897426754349984231, guid: b207623da35a32640a7bc661a55f1faa,
+    type: 3}
   audioSource: {fileID: 0}
   ambientSounds:
   - {fileID: 8300000, guid: 075ea2e4a290d1c498440d835538aef8, type: 3}
   hitSounds:
   - {fileID: 8300000, guid: bc992ce012560834e900490855b8f592, type: 3}
+  - {fileID: 8300000, guid: 7291f3c797475e34bbf4673dd5d2b85a, type: 3}
   attackSounds:
   - {fileID: 8300000, guid: 2e8c5663843fffb4cbdbc3efcd490de0, type: 3}
   minAmbientTime: 3
