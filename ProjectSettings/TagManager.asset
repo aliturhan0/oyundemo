@@ -17,6 +17,7 @@ TagManager:
   - Dirt (Static)
   - Wood
   - CinemachineTarget
+  - Zombie
   layers:
   - Default
   - TransparentFX
