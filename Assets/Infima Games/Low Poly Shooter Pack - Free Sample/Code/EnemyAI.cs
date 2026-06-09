@@ -85,6 +85,20 @@ public class EnemyAI : MonoBehaviour
                 playerHealth = player.GetComponent<PlayerHealth>();
             }
         }
+
+        // Zombiyi en yakın NavMesh noktasına sabitle (eğer dışarıda doğduysa)
+        if (navAgent != null && navAgent.isActiveAndEnabled && !navAgent.isOnNavMesh)
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, 10.0f, NavMesh.AllAreas))
+            {
+                navAgent.Warp(hit.position);
+            }
+            else
+            {
+                Debug.LogWarning($"Zombi ({gameObject.name}) NavMesh üzerinde değil ve yakınlarda NavMesh bulunamadı! Sahnenizde NavMesh baked yapıldığından emin olun.");
+            }
+        }
     }
 
     private void Update()
@@ -113,9 +127,16 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 // Oyuncuya doğru hareket et
-                navAgent.isStopped = false;
-                navAgent.SetDestination(player.transform.position);
-                animator.SetFloat(hashSpeed, navAgent.velocity.magnitude);
+                if (navAgent.isActiveAndEnabled && navAgent.isOnNavMesh)
+                {
+                    navAgent.isStopped = false;
+                    navAgent.SetDestination(player.transform.position);
+                    animator.SetFloat(hashSpeed, navAgent.velocity.magnitude);
+                }
+                else
+                {
+                    animator.SetFloat(hashSpeed, 0f);
+                }
             }
         }
     }
@@ -136,7 +157,10 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator AttackRoutine()
     {
         isAttacking = true;
-        navAgent.isStopped = true;
+        if (navAgent.isActiveAndEnabled && navAgent.isOnNavMesh)
+        {
+            navAgent.isStopped = true;
+        }
         animator.SetFloat(hashSpeed, 0); // Yürümeyi durdur
         animator.SetTrigger(hashAttack);
 
@@ -189,7 +213,10 @@ public class EnemyAI : MonoBehaviour
     private IEnumerator HitRoutine()
     {
         isHit = true;
-        navAgent.isStopped = true; // Hareketi durdur
+        if (navAgent.isActiveAndEnabled && navAgent.isOnNavMesh)
+        {
+            navAgent.isStopped = true; // Hareketi durdur
+        }
         animator.SetTrigger(hashHit); // Vurulma animasyonunu oynat
 
         yield return new WaitForSeconds(hitStunDuration);
@@ -197,14 +224,20 @@ public class EnemyAI : MonoBehaviour
         if (!isDead)
         {
             isHit = false;
-            navAgent.isStopped = false; // Harekete devam et
+            if (navAgent.isActiveAndEnabled && navAgent.isOnNavMesh)
+            {
+                navAgent.isStopped = false; // Harekete devam et
+            }
         }
     }
 
     private void Die()
     {
         isDead = true;
-        navAgent.isStopped = true;
+        if (navAgent.isActiveAndEnabled && navAgent.isOnNavMesh)
+        {
+            navAgent.isStopped = true;
+        }
         animator.SetTrigger(hashDeath);
         
         // Zombi öldüğünde sistemi bilgilendir
