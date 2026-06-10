@@ -16,11 +16,13 @@ namespace InfimaGames.LowPolyShooterPack.Interface
         /// </summary>
         protected override void Tick()
         {
-            //Total Ammunition.
-            float ammunitionTotal = equippedWeapon.GetAmmunitionTotal();
-            
+            //Yedek (reserve) mermiyi göster. -1 = sınırsız -> "∞".
+            int reserve = equippedWeapon.GetAmmunitionReserve();
+
             //Update Text.
-            textMesh.text = ammunitionTotal.ToString(CultureInfo.InvariantCulture);
+            textMesh.text = reserve < 0
+                ? "∞"
+                : reserve.ToString(CultureInfo.InvariantCulture);
         }
         
         #endregion

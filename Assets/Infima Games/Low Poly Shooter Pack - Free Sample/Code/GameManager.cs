@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [Header("Next Level")]
     public string nextSceneName = "Level2";
 
-    private bool gameEnded = false;
+    public bool gameEnded = false;
 
     private void Awake()
     {
@@ -74,13 +74,68 @@ public class GameManager : MonoBehaviour
 
         if (objectiveText != null)
         {
-            objectiveText.text = "BÖLÜM GEÇİLDİ! ZOMBİLER TEMİZLENDİ!";
-            objectiveText.color = Color.green;
+            objectiveText.gameObject.SetActive(false);
         }
 
-        if (gameAudioSource != null && winSound != null)
+        // Sahne adına göre müzik davranışını ayarla
+        string sahneAdi = SceneManager.GetActiveScene().name;
+
+        if (sahneAdi != "SampleScene")
         {
-            gameAudioSource.PlayOneShot(winSound);
+            // LEVEL 2 VE DİĞERLERİ: Sahnedeki tüm diğer sesleri kapat, kazanma sesini loopta çal
+            if (gameAudioSource == null)
+            {
+                gameAudioSource = GetComponent<AudioSource>();
+                if (gameAudioSource == null)
+                {
+                    gameAudioSource = gameObject.AddComponent<AudioSource>();
+                }
+            }
+            gameAudioSource.spatialBlend = 0f; // 2D Ses yap
+
+            AudioSource[] tumSesKaynaklari = FindObjectsOfType<AudioSource>();
+            foreach (AudioSource ses in tumSesKaynaklari)
+            {
+                if (ses != gameAudioSource)
+                {
+                    ses.Stop();
+                }
+            }
+
+            if (winSound != null)
+            {
+                gameAudioSource.clip = winSound;
+                gameAudioSource.loop = true; // Döngüye al
+                gameAudioSource.volume = 1.0f; // Sesi tam aç
+                gameAudioSource.Play();
+            }
+            else
+            {
+                Debug.LogWarning("[GameManager] Win Sound (Kazanma Sesi) Inspector'da atanmamış!");
+            }
+        }
+        else
+        {
+            // LEVEL 1 (SampleScene): Sahne müziklerini susturma, sadece kazanma sesini bir kez çal
+            if (winSound != null)
+            {
+                if (gameAudioSource == null)
+                {
+                    gameAudioSource = GetComponent<AudioSource>();
+                    if (gameAudioSource == null)
+                    {
+                        gameAudioSource = gameObject.AddComponent<AudioSource>();
+                    }
+                }
+                gameAudioSource.spatialBlend = 0f;
+                gameAudioSource.PlayOneShot(winSound);
+            }
+        }
+
+        // Kombo sayacını temizle/gizle
+        if (ComboManager.Instance != null)
+        {
+            ComboManager.Instance.ResetCombo();
         }
 
         if (winMenuPanel != null)
@@ -121,5 +176,27 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(nextSceneName);
+    }
+
+    // Ana menüye dönmek için kullanılacak metod
+    public void LoadMainMenu()
+    {
+        Debug.Log("Ana Menüye dönülüyor...");
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("AnaMenu");
+    }
+
+    // Oyundan tamamen çıkmak için kullanılacak metod
+    public void QuitGame()
+    {
+        Debug.Log("QuitGame çağrıldı!");
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
     }
 }

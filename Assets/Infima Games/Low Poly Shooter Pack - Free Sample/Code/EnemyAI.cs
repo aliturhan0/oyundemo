@@ -240,16 +240,16 @@ public class EnemyAI : MonoBehaviour
         }
         animator.SetTrigger(hashDeath);
         
-        // Zombi öldüğünde sistemi bilgilendir
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.ZombieKilled();
-        }
-
         // Kombo sayacını artır — zombi öldürme başarısı
         if (ComboManager.Instance != null)
         {
             ComboManager.Instance.RegisterHit();
+        }
+
+        // Zombi öldüğünde sistemi bilgilendir
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ZombieKilled();
         }
 
         // Spawner'a haber ver ki haritada yeni zombiye yer açılsın

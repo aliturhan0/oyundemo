@@ -24,6 +24,28 @@ public class AK12Silah : MonoBehaviour
     [Tooltip("Reload süresi (saniye). 0 = animasyonun kendi uzunluğu. >0 = bu süreye sığdırılır (animasyon hızlanır).")]
     public float reloadSuresi = 0f;
 
+    [Header("Mermi (Şarjör)")]
+    [Tooltip("Bir şarjördeki mermi sayısı.")]
+    public int sarjorKapasitesi = 30;
+    [Tooltip("Toplam yedek mermi (reload için). -1 = sınırsız yedek.")]
+    public int yedekMermi = 90;
+    [Tooltip("Şarjör boşken tetiğe basınca çalacak 'tık' sesi (opsiyonel).")]
+    public AudioSource bosSarjorSesi;
+    [Tooltip("Şarjör boşalınca otomatik reload yapılsın mı?")]
+    public bool bosaltincaOtomatikReload = false;
+
+    // HUD için: mevcut şarjör ve yedek dışarıdan okunabilir.
+    public int MevcutMermi => _mevcutMermi;
+    public int YedekMermi => yedekMermi;
+
+    /// <summary>Yerdeki şarjör kutusu (SarjorAlma) bunu çağırır: yedek mermiye ekler.</summary>
+    public void MermiEkle(int adet)
+    {
+        if (yedekMermi < 0) return;   // zaten sınırsız yedek
+        yedekMermi += adet;
+        Debug.Log("Mermi alındı. Yeni yedek: " + yedekMermi);
+    }
+
     [Header("Animasyon Klip İsimleri (Animation listesindekiyle birebir aynı olmalı)")]
     public string idleKlip = "Idle";
     public string atesKlip = "Shoot";
@@ -36,10 +58,14 @@ public class AK12Silah : MonoBehaviour
     private Animation _anim;
     private float _sonrakiAtesZamani;
     private bool _reloadEdiliyor;
+    private int _mevcutMermi;
 
     void Start()
     {
         _anim = GetComponent<Animation>();
+
+        // Oyun başında şarjörü doldur.
+        _mevcutMermi = sarjorKapasitesi;
 
         // KRİTİK: glTFast tüm klipleri "Loop" import ediyor.
         // Idle döngülü kalmalı; ateş/reload TEK SEFER oynayıp bitmeli.
@@ -65,7 +91,9 @@ public class AK12Silah : MonoBehaviour
         if (_anim == null) return;
 
         // Reload (ateş ederken bile basılınca araya girer)
-        if (Input.GetKeyDown(KeyCode.R) && !_reloadEdiliyor)
+        // Sadece şarjör dolu değilse VE yedek mermi varsa reload yapılır.
+        if (Input.GetKeyDown(KeyCode.R) && !_reloadEdiliyor
+            && _mevcutMermi < sarjorKapasitesi && yedekMermi != 0)
         {
             StartCoroutine(Reload());
             return;
@@ -77,8 +105,26 @@ public class AK12Silah : MonoBehaviour
 
         if (atesGirdisi && Time.time >= _sonrakiAtesZamani)
         {
-            _sonrakiAtesZamani = Time.time + atesHizi;
-            Ates();
+            if (_mevcutMermi > 0)
+            {
+                // Mermi var: ateş et, sayacı azalt.
+                _sonrakiAtesZamani = Time.time + atesHizi;
+                Ates();
+            }
+            else
+            {
+                // Şarjör boş: ateş etme. Tek tık anında "boş" sesi çal.
+                if (Input.GetMouseButtonDown(0) && bosSarjorSesi != null)
+                    bosSarjorSesi.Play();
+                _sonrakiAtesZamani = Time.time + atesHizi; // ses spam'ini engelle
+
+                // İstenirse boşalınca otomatik reload.
+                if (bosaltincaOtomatikReload && yedekMermi != 0)
+                {
+                    StartCoroutine(Reload());
+                    return;
+                }
+            }
         }
         else if (!Input.GetMouseButton(0) && !_anim.IsPlaying(atesKlip) && !_anim.IsPlaying(reloadKlip))
         {
@@ -89,6 +135,9 @@ public class AK12Silah : MonoBehaviour
 
     void Ates()
     {
+        // Mermiyi düş.
+        _mevcutMermi--;
+
         // Ateş klibini baştan oynat (otomatikte her atışta resetlenir)
         _anim.Stop(atesKlip);
         _anim.Play(atesKlip);
@@ -121,6 +170,20 @@ public class AK12Silah : MonoBehaviour
 
         _anim.Play(reloadKlip);
         yield return new WaitForSeconds(hedefSure);
+
+        // Şarjörü yedekten doldur.
+        int ihtiyac = sarjorKapasitesi - _mevcutMermi;
+        if (yedekMermi < 0)
+        {
+            // Sınırsız yedek.
+            _mevcutMermi = sarjorKapasitesi;
+        }
+        else
+        {
+            int alinan = Mathf.Min(ihtiyac, yedekMermi);
+            _mevcutMermi += alinan;
+            yedekMermi   -= alinan;
+        }
 
         _reloadEdiliyor = false;
         _anim.CrossFade(idleKlip, 0.1f);

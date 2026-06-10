@@ -442,7 +442,11 @@ namespace InfimaGames.LowPolyShooterPack
 			//Block while inspecting.
 			if (inspecting)
 				return false;
-			
+
+			//Yedek mermi bittiyse reload yapma (-1 = sınırsız, devam eder).
+			if (equippedWeapon != null && equippedWeapon.GetAmmunitionReserve() == 0)
+				return false;
+
 			//Return.
 			return true;
 		}

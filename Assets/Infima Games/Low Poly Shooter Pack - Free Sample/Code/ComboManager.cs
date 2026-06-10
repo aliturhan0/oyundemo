@@ -54,6 +54,10 @@ public class ComboManager : MonoBehaviour
     /// </summary>
     public void RegisterHit()
     {
+        // Eğer oyun zaten bittiyse kombo kaydetme
+        if (GameManager.Instance != null && GameManager.Instance.gameEnded)
+            return;
+
         currentCombo++;
         lastHitTime = Time.time;
 
@@ -71,7 +75,7 @@ public class ComboManager : MonoBehaviour
         }
     }
 
-    private void ResetCombo()
+    public void ResetCombo()
     {
         currentCombo = 0;
         if (comboText != null)

@@ -76,6 +76,15 @@ namespace InfimaGames.LowPolyShooterPack
         public abstract int GetAmmunitionTotal();
 
         /// <summary>
+        /// Returns the reserve (yedek) ammunition left for reloading. -1 = sınırsız.
+        /// </summary>
+        public virtual int GetAmmunitionReserve() => -1;
+        /// <summary>
+        /// Adds ammunition to the reserve (yerdeki şarjör kutusu bunu çağırır).
+        /// </summary>
+        public virtual void AddAmmunitionReserve(int amount) { }
+
+        /// <summary>
         /// Returns the Weapon's Animator component.
         /// </summary>
         public abstract Animator GetAnimator();
