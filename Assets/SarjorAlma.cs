@@ -1,40 +1,75 @@
 using UnityEngine;
+using InfimaGames.LowPolyShooterPack; // Infima silah sistemine erişim
 
+/// <summary>
+/// Yerdeki şarjör/mermi kutusu. Oyuncu üstüne gelince sahnedeki AK-12'nin
+/// yedek mermisini gerçekten artırır, sonra kutuyu gizleyip siler.
+/// NOT: Bu objede TRIGGER bir Collider olmalı (Is Trigger açık) ve oyuncuda "Player" tag'ı olmalı.
+/// </summary>
 public class SarjorAlma : MonoBehaviour
 {
+    [Header("Ne Kadar Mermi Versin (yedeğe eklenir)")]
+    public int mermiMiktari = 30;
+
     [Header("Ses Efekti")]
     public AudioClip mermiAlmaSesi;
 
+    private bool _alindi = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (_alindi) return;
+        if (!other.CompareTag("Player")) return;
+
+        bool eklendi = false;
+
+        // 1) ASIL SİLAH: Infima'nın o an kuşanılan silahının yedeğini doldur.
+        try
         {
-            Debug.Log("Şarjör Alındı! Mermiler Fullendi!");
-
-            if (mermiAlmaSesi != null)
+            var gms = ServiceLocator.Current != null ? ServiceLocator.Current.Get<IGameModeService>() : null;
+            var karakter = gms != null ? gms.GetPlayerCharacter() : null;
+            var envanter = karakter != null ? karakter.GetInventory() : null;
+            var infimaSilah = envanter != null ? envanter.GetEquipped() : null;
+            if (infimaSilah != null)
             {
-                // 1. Kutuyu anında görünmez yap (Oyuncu mermiyi aldı sanacak)
-                Renderer[] butunGorseller = GetComponentsInChildren<Renderer>();
-                foreach (Renderer gorsel in butunGorseller) gorsel.enabled = false;
-                
-                // 2. Kutunun çarpışmasını kapat (İkinci kez alınmasın diye)
-                Collider[] butunCarpismalar = GetComponentsInChildren<Collider>();
-                foreach (Collider carp in butunCarpismalar) carp.enabled = false;
-
-                // 3. Kutuya anında bir kaset çalar tak, 2D yapıp beynin içine ver!
-                AudioSource kasetCalar = gameObject.AddComponent<AudioSource>();
-                kasetCalar.spatialBlend = 0f; // 0 demek KESİNLİKLE 2D demek, mesafe tanımaz!
-                kasetCalar.volume = 1f;
-                kasetCalar.PlayOneShot(mermiAlmaSesi);
-
-                // 4. Kutuyu ses bittikten TAM SONRA sil!
-                Destroy(gameObject, mermiAlmaSesi.length);
+                infimaSilah.AddAmmunitionReserve(mermiMiktari);
+                eklendi = true;
             }
-            else
-            {
-                // Kaset boşsa direkt sil
-                Destroy(gameObject);
-            }
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogWarning("SarjorAlma: Infima silahına ulaşılamadı -> " + e.Message);
+        }
+
+        // 2) (Varsa) custom silahlar da dolsun — zararsız.
+        AK12Silah ak = FindObjectOfType<AK12Silah>();
+        if (ak != null) { ak.MermiEkle(mermiMiktari); eklendi = true; }
+        SilahSistemi ss = FindObjectOfType<SilahSistemi>();
+        if (ss != null) { ss.MermiEkle(mermiMiktari); eklendi = true; }
+
+        if (eklendi)
+            Debug.Log("Şarjör alındı! +" + mermiMiktari + " yedek mermi.");
+        else
+            Debug.LogWarning("SarjorAlma: Silah bulunamadı, mermi eklenemedi.");
+
+        _alindi = true;
+
+        // Kutuyu gizle + çarpışmayı kapat (tekrar alınmasın).
+        foreach (Renderer gorsel in GetComponentsInChildren<Renderer>()) gorsel.enabled = false;
+        foreach (Collider carp in GetComponentsInChildren<Collider>()) carp.enabled = false;
+
+        // Ses varsa çal ve ses bitince sil; yoksa hemen sil.
+        if (mermiAlmaSesi != null)
+        {
+            AudioSource kasetCalar = gameObject.AddComponent<AudioSource>();
+            kasetCalar.spatialBlend = 0f; // 2D, mesafeden bağımsız
+            kasetCalar.volume = 1f;
+            kasetCalar.PlayOneShot(mermiAlmaSesi);
+            Destroy(gameObject, mermiAlmaSesi.length);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
     }
 }

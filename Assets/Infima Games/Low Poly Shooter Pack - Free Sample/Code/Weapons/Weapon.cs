@@ -13,8 +13,12 @@ namespace InfimaGames.LowPolyShooterPack
         
         [Header("Firing")]
 
+        [Tooltip("Yedek mermi (reload için). -1 = sınırsız. Pozitif değer = sınırlı, reload yedekten düşer.")]
+        [SerializeField]
+        private int ammunitionReserve = 90;
+
         [Tooltip("Is this weapon automatic? If yes, then holding down the firing button will continuously fire.")]
-        [SerializeField] 
+        [SerializeField]
         private bool automatic;
         
         [Tooltip("How fast the projectiles are.")]
@@ -188,6 +192,15 @@ namespace InfimaGames.LowPolyShooterPack
 
         public override int GetAmmunitionTotal() => magazineBehaviour.GetAmmunitionTotal();
 
+        public override int GetAmmunitionReserve() => ammunitionReserve;
+        public override void AddAmmunitionReserve(int amount)
+        {
+            //Sınırsız yedekse dokunma.
+            if (ammunitionReserve < 0)
+                return;
+            ammunitionReserve = Mathf.Max(0, ammunitionReserve + amount);
+        }
+
         public override bool IsAutomatic() => automatic;
         public override float GetRateOfFire() => roundsPerMinutes;
         
@@ -244,9 +257,26 @@ namespace InfimaGames.LowPolyShooterPack
 
         public override void FillAmmunition(int amount)
         {
-            //Update the value by a certain amount.
-            ammunitionCurrent = amount != 0 ? Mathf.Clamp(ammunitionCurrent + amount, 
-                0, GetAmmunitionTotal()) : magazineBehaviour.GetAmmunitionTotal();
+            //amount != 0: doğrudan belli miktar ekle (nadiren kullanılır).
+            if (amount != 0)
+            {
+                ammunitionCurrent = Mathf.Clamp(ammunitionCurrent + amount, 0, GetAmmunitionTotal());
+                return;
+            }
+
+            //amount == 0: bu bir RELOAD. Şarjörü YEDEKTEN doldur.
+            int ihtiyac = GetAmmunitionTotal() - ammunitionCurrent;
+            if (ammunitionReserve < 0)
+            {
+                //Sınırsız yedek: tam doldur (orijinal davranış).
+                ammunitionCurrent = magazineBehaviour.GetAmmunitionTotal();
+            }
+            else
+            {
+                int alinan = Mathf.Min(ihtiyac, ammunitionReserve);
+                ammunitionCurrent += alinan;
+                ammunitionReserve -= alinan;
+            }
         }
 
         public override void EjectCasing()
