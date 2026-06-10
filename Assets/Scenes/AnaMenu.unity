@@ -194,7 +194,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 253, y: 180}
+  m_AnchoredPosition: {x: 293, y: 223}
   m_SizeDelta: {x: 600, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &458192379
@@ -217,15 +217,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " S\u0131n\u0131rl\u0131 Cephane: Oyunda s\u0131n\u0131rs\u0131z mermi
-    yoktur! Haritada rastgele veya belirli s\xFCrelerle spawn olan Cephane Kutular\u0131n\u0131
-    toplayarak yedek mermini doldur.\n\r\nLevel 1 : Hayatta kalmak i\xE7in toplam
-    15 zombi temizlemelisin.\r\n\nLevel 2 : Dikkat et! Orman\u0131n karanl\u0131\u011F\u0131nda;
-    daha dayan\u0131kl\u0131, daha h\u0131zl\u0131 ve daha tehlikeli olan Mutant
-    Zombiler pusu kurmu\u015F durumda.\r B\xF6l\xFCm\xFC ge\xE7mek i\xE7in 10 tane
-    mutantu temizlemelisin.\n\nTaktik: Zombiler yakla\u015Ft\u0131k\xE7a gerilim
-    m\xFCzi\u011Fi h\u0131zlan\u0131r. Kulakl\u0131\u011F\u0131n\u0131 tak ve m\xFCzi\u011Fin
-    sesini iyi dinle!"
+  m_text: "<color=#FF3333><b>S\u0131n\u0131rl\u0131 Cephane:</b></color> Oyunda s\u0131n\u0131rs\u0131z
+    mermi yoktur! Haritada rastgele veya belirli s\xFCrelerle spawn olan <color=#FFCC00>Cephane
+    Kutular\u0131n\u0131</color> toplayarak yedek mermini doldur.\r\n\n<color=#33FF33><b>Level
+    1 :</b></color> Kan g\xF6l\xFCne d\xF6nm\xFC\u015F bu dar ve \xE7\u0131kmaz ormanda
+    hayatta kalmak i\xE7in sava\u015F! Her k\xF6\u015Feden f\u0131rlayabilecek zombilere
+    kar\u015F\u0131 uyan\u0131k ol ve b\xF6lgeyi g\xFCvenceye almak i\xE7in <color=#FFCC00>15
+    zombiyi</color> etkisiz hale getir.\r\n\n<color=#FF3333><b>Level 2:</b></color>
+    Dikkat et! Orman\u0131n karanl\u0131\u011F\u0131nda; daha dayan\u0131kl\u0131,
+    daha h\u0131zl\u0131 ve daha tehlikeli olan <color=#FF0000><b>Mutant Zombiler</b></color>
+    pusu kurmu\u015F durumda. B\xF6l\xFCm\xFC ge\xE7mek i\xE7in <color=#FFCC00>10
+    tane mutantu</color> temizlemelisin.\n\r\n<color=#33FFFF><b>Taktik:</b></color>
+    Zombiler yakla\u015Ft\u0131k\xE7a gerilim m\xFCzi\u011Fi h\u0131zlan\u0131r.
+    Kulakl\u0131\u011F\u0131n\u0131 tak ve m\xFCzi\u011Fin sesini iyi dinle!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1f8fe66c91dde3841ac99e72925eeb29, type: 2}
   m_sharedMaterial: {fileID: -4383862590563831049, guid: 1f8fe66c91dde3841ac99e72925eeb29,
@@ -726,7 +730,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 17}
+  m_AnchoredPosition: {x: -520, y: -61}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &775344640
@@ -1207,7 +1211,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 102}
+  m_AnchoredPosition: {x: -520, y: 42}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1444571940
@@ -1355,6 +1359,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1680009273}
   - {fileID: 48778578}
   - {fileID: 1086217493}
   m_Father: {fileID: 0}
@@ -1658,6 +1663,81 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1680009272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1680009273}
+  - component: {fileID: 1680009275}
+  - component: {fileID: 1680009274}
+  m_Layer: 5
+  m_Name: ArkaPlan
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1680009273
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680009272}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1478479325}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1680009274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680009272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: b1b8133819ae8974db8c3680220ef576, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1680009275
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680009272}
+  m_CullTransparentMesh: 1
 --- !u!1 &1756142467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1924,7 +2004,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -71}
+  m_AnchoredPosition: {x: -520, y: -164}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2080445633

@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 283907710}
   - component: {fileID: 283907709}
   m_Layer: 5
-  m_Name: QuitButton
+  m_Name: "AnaMen\xFCD\xF6n"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -983,7 +983,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 919742474}
         m_TargetAssemblyTypeName: PlayerHealth, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1147,7 +1147,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 3, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &314221546
@@ -1391,7 +1391,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -5, y: 0}
+  m_AnchoredPosition: {x: 2, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &544482500
@@ -2329,7 +2329,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -67}
+  m_AnchoredPosition: {x: 0, y: -168}
   m_SizeDelta: {x: 1500, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921479117
@@ -2740,12 +2740,12 @@ GameObject:
   - component: {fileID: 1167660000}
   - component: {fileID: 1167660003}
   m_Layer: 5
-  m_Name: "\xD6nceki B\xF6l\xFCm"
+  m_Name: "AnaMen\xFCD\xF6n"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1167659999
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2763,8 +2763,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.7, y: -85}
-  m_SizeDelta: {x: 600, y: 300}
+  m_AnchoredPosition: {x: 0.7, y: -8}
+  m_SizeDelta: {x: 600, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1167660000
 MonoBehaviour:
@@ -2812,7 +2812,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1905110900}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: LoadNextLevel
+        m_MethodName: LoadMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3517,7 +3517,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xC7IKI\u015E"
+  m_text: "ANA MEN\xDCYE D\xD6N"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4e3cd531806bf31418a4fe54d867bdb7, type: 2}
   m_sharedMaterial: {fileID: -6655830793289714117, guid: 4e3cd531806bf31418a4fe54d867bdb7,
@@ -3683,7 +3683,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\xD6NCEK\u0130 B\xD6L\xDCM"
+  m_text: "ANA MEN\xDCYE D\xD6N"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4e3cd531806bf31418a4fe54d867bdb7, type: 2}
   m_sharedMaterial: {fileID: -6655830793289714117, guid: 4e3cd531806bf31418a4fe54d867bdb7,
