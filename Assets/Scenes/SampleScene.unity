@@ -1245,6 +1245,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 448958757, guid: 19eadcf8fbed56b4da77ca94c1b4145f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 601192529242639950, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
       propertyPath: m_ActionEvents.Array.size
@@ -1463,7 +1467,7 @@ PrefabInstance:
     - target: {fileID: 2748913124992463393, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.43799996
+      value: -0.48
       objectReference: {fileID: 0}
     - target: {fileID: 2748913124992463393, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
@@ -1573,10 +1577,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2751027687307977091, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 919742491}
-    - targetCorrespondingSourceObject: {fileID: 2751027687307977091, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 919742490}
     - targetCorrespondingSourceObject: {fileID: 2751027687307977091, guid: 19eadcf8fbed56b4da77ca94c1b4145f,
         type: 3}
@@ -1622,7 +1622,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sarjorPrefab: {fileID: 3028992225150147675, guid: 1c4adb6dc217458489cdc6d4ea258eaf,
     type: 3}
-  minX: 3
+  minX: 0
   maxX: 30
   minZ: 0
   maxZ: 30
@@ -2456,8 +2456,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arkaPlanSesi: {fileID: 919742490}
   gerilimSesi: {fileID: 919742489}
-  baslamaMesafesi: 20
-  maxGerilimMesafesi: 5
+  baslamaMesafesi: 3
+  maxGerilimMesafesi: 1
 --- !u!82 &919742489
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2566,7 +2566,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 516a36b63ba3c9b4c968d112b6847aff, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.775
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2650,22 +2650,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &919742491
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919742463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d0b91f761e7d844ab6574292e99bcdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  arkaPlanSesi: {fileID: 0}
-  gerilimSesi: {fileID: 0}
-  baslamaMesafesi: 5
-  maxGerilimMesafesi: 2
 --- !u!1 &919793981 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a27671d00b67a414db243e2f9df6f3d7,
@@ -3368,7 +3352,7 @@ TerrainCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 2
   m_TerrainData: {fileID: 15600000, guid: 23b4ab10142c2674d95e649af2395b4c, type: 2}
