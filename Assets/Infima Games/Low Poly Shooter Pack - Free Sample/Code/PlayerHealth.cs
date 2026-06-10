@@ -189,6 +189,16 @@ public class PlayerHealth : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void LoadMainMenu()
+    {
+        Debug.Log("Ana Menüye dönülüyor...");
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("AnaMenu");
+    }
+
     public void QuitGame()
     {
         Debug.Log("Oyundan çıkılıyor...");

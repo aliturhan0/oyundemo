@@ -178,6 +178,17 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextSceneName);
     }
 
+    // Ana menüye dönmek için kullanılacak metod
+    public void LoadMainMenu()
+    {
+        Debug.Log("Ana Menüye dönülüyor...");
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene("AnaMenu");
+    }
+
     // Oyundan tamamen çıkmak için kullanılacak metod
     public void QuitGame()
     {
