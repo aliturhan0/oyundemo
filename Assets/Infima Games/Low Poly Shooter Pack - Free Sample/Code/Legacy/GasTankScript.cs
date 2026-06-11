@@ -70,9 +70,8 @@ public class GasTankScript : MonoBehaviour {
 			flameAudioSource.clip = flameClip;
 			flameAudioSource.loop = true;
 			flameAudioSource.playOnAwake = false;
-			flameAudioSource.spatialBlend = 1.0f; // 3D ses
-			flameAudioSource.minDistance = 1.0f;
-			flameAudioSource.maxDistance = 50.0f;
+			flameAudioSource.spatialBlend = 0.0f; // 2D ses (her yerden duyulur)
+			flameAudioSource.volume = 1.0f;       // Son ses
 		}
 
 		if (impactClip != null)
@@ -81,9 +80,8 @@ public class GasTankScript : MonoBehaviour {
 			impactAudioSource.clip = impactClip;
 			impactAudioSource.loop = false;
 			impactAudioSource.playOnAwake = false;
-			impactAudioSource.spatialBlend = 1.0f; // 3D ses
-			impactAudioSource.minDistance = 1.0f;
-			impactAudioSource.maxDistance = 50.0f;
+			impactAudioSource.spatialBlend = 0.0f; // 2D ses (her yerden duyulur)
+			impactAudioSource.volume = 1.0f;       // Son ses
 		}
 	}
 

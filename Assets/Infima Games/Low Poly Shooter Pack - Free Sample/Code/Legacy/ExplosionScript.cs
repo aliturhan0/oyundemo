@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ExplosionScript : MonoBehaviour {
@@ -20,11 +20,16 @@ public class ExplosionScript : MonoBehaviour {
 		StartCoroutine (DestroyTimer ());
 		StartCoroutine (LightFlash ());
 
-		//Get a random impact sound from the array
-		audioSource.clip = explosionSounds
-			[Random.Range(0, explosionSounds.Length)];
-		//Play the random explosion sound
-		audioSource.Play();
+		if (audioSource != null && explosionSounds != null && explosionSounds.Length > 0)
+		{
+			//Get a random impact sound from the array
+			audioSource.clip = explosionSounds[Random.Range(0, explosionSounds.Length)];
+			// Sesi 2D (Global) yaparak mesafe sorununu coz ve sesi son ses (1.0) yap
+			audioSource.spatialBlend = 0.0f;
+			audioSource.volume = 1.0f;
+			//Play the random explosion sound
+			audioSource.Play();
+		}
 	}
 
 	private IEnumerator LightFlash () {
