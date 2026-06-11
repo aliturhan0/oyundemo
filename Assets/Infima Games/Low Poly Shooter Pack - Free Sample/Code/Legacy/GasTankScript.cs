@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class GasTankScript : MonoBehaviour {
@@ -45,17 +45,46 @@ public class GasTankScript : MonoBehaviour {
 	public ParticleSystem flameParticles;
 	public ParticleSystem smokeParticles;
 
-	[Header("Audio")]
-	public AudioSource flameSound;
-	public AudioSource impactSound;
+	[Header("Audio Settings")]
+	[Tooltip("Gaz kaçırma/alev sesi dosyası.")]
+	public AudioClip flameClip;
+	[Tooltip("Çarpma/darbe sesi dosyası.")]
+	public AudioClip impactClip;
+
+	private AudioSource flameAudioSource;
+	private AudioSource impactAudioSource;
+
 	//Used to check if the audio has played
-	bool audioHasPlayed = false;
+	private bool audioHasPlayed = false;
 	
 	private void Start () {
 		//Make sure the light is off at start
-		lightObject.intensity = 0;
+		if (lightObject != null) lightObject.intensity = 0;
 		//Get a random value for the rotation
 		randomValue = Random.Range (-50, 50);
+
+		// Dinamik AudioSource bileşenlerini oluşturarak referans hatalarını önle
+		if (flameClip != null)
+		{
+			flameAudioSource = gameObject.AddComponent<AudioSource>();
+			flameAudioSource.clip = flameClip;
+			flameAudioSource.loop = true;
+			flameAudioSource.playOnAwake = false;
+			flameAudioSource.spatialBlend = 1.0f; // 3D ses
+			flameAudioSource.minDistance = 1.0f;
+			flameAudioSource.maxDistance = 50.0f;
+		}
+
+		if (impactClip != null)
+		{
+			impactAudioSource = gameObject.AddComponent<AudioSource>();
+			impactAudioSource.clip = impactClip;
+			impactAudioSource.loop = false;
+			impactAudioSource.playOnAwake = false;
+			impactAudioSource.spatialBlend = 1.0f; // 3D ses
+			impactAudioSource.minDistance = 1.0f;
+			impactAudioSource.maxDistance = 50.0f;
+		}
 	}
 
 	private void Update () {
@@ -73,27 +102,33 @@ public class GasTankScript : MonoBehaviour {
 			}
 
 			//Add force to the gas tank 
-			gameObject.GetComponent<Rigidbody>().AddRelativeForce
-				(Vector3.down * moveSpeed * 50 *Time.deltaTime);
+			Rigidbody rb = GetComponent<Rigidbody>();
+			if (rb != null)
+			{
+				rb.AddRelativeForce(Vector3.down * moveSpeed * 50 * Time.deltaTime);
+			}
 
 			//Rotate the gas tank, based on the random rotation values
 			transform.Rotate (randomRotationValue,0,randomValue * 
 			                  rotationSpeed * Time.deltaTime); 
 
 			//Play the flame particles
-			flameParticles.Play ();
+			if (flameParticles != null) flameParticles.Play ();
 			//Play the smoke particles
-			smokeParticles.Play ();
+			if (smokeParticles != null) smokeParticles.Play ();
 
 			//Increase the flame sound pitch over time
-			flameSound.pitch += audioPitchIncrease * Time.deltaTime;
-
-			//If the audio has not played, play it
-			if (!audioHasPlayed) 
+			if (flameAudioSource != null)
 			{
-				flameSound.Play ();
-				//Audio has played
-				audioHasPlayed = true;
+				flameAudioSource.pitch += audioPitchIncrease * Time.deltaTime;
+
+				//If the audio has not played, play it
+				if (!audioHasPlayed) 
+				{
+					flameAudioSource.Play ();
+					//Audio has played
+					audioHasPlayed = true;
+				}
 			}
 
 			if (routineStarted == false) 
@@ -102,13 +137,16 @@ public class GasTankScript : MonoBehaviour {
 				StartCoroutine(Explode());
 				routineStarted = true;
 				//Set the light intensity to 3
-				lightObject.intensity = 3;
+				if (lightObject != null) lightObject.intensity = 3;
 			}
 		}
 	}
 	private void OnCollisionEnter (Collision collision) {
 		//Play the impact sound on every collision
-		impactSound.Play ();
+		if (impactAudioSource != null) 
+		{
+			impactAudioSource.Play ();
+		}
 	}
 
 	private IEnumerator Explode ()
