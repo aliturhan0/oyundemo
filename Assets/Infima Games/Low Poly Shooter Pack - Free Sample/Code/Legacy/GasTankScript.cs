@@ -148,10 +148,14 @@ public class GasTankScript : MonoBehaviour {
 		}
 	}
 	private void OnCollisionEnter (Collision collision) {
-		//Play the impact sound on every collision
-		if (impactAudioSource != null) 
+		// Sadece çarpışma şiddeti yeterince yüksekse çarpma sesini çal
+		// (Bu sayede tüp oyun başında yere değdiğinde veya yavaşça sürtündüğünde ses çalmaz)
+		if (collision.relativeVelocity.magnitude > 2.0f)
 		{
-			impactAudioSource.Play ();
+			if (impactAudioSource != null) 
+			{
+				impactAudioSource.Play ();
+			}
 		}
 	}
 
