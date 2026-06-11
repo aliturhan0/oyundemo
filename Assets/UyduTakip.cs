@@ -18,5 +18,10 @@ public class UyduTakip : MonoBehaviour
             // Fizik hatalarına karşı ikonu hep gökyüzüne bakar şekilde kilitle
             transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
+        else
+        {
+            // Hedef varil patlayıp yok olduğunda, haritadaki bu ikonu da yok et!
+            Destroy(gameObject);
+        }
     }
 }
