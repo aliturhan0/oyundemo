@@ -219,17 +219,20 @@ MonoBehaviour:
       m_Calls: []
   m_text: "<color=#FF3333><b>S\u0131n\u0131rl\u0131 Cephane:</b></color> Oyunda s\u0131n\u0131rs\u0131z
     mermi yoktur! Haritada rastgele veya belirli s\xFCrelerle spawn olan <color=#FFCC00>Cephane
-    Kutular\u0131n\u0131</color> toplayarak yedek mermini doldur.\r\n\n<color=#33FF33><b>Level
+    Kutular\u0131n\u0131</color> toplayarak yedek mermini doldur.\r\n\r\n<color=#33FF33><b>Level
     1 :</b></color> Kan g\xF6l\xFCne d\xF6nm\xFC\u015F bu dar ve \xE7\u0131kmaz ormanda
     hayatta kalmak i\xE7in sava\u015F! Her k\xF6\u015Feden f\u0131rlayabilecek zombilere
     kar\u015F\u0131 uyan\u0131k ol ve b\xF6lgeyi g\xFCvenceye almak i\xE7in <color=#FFCC00>15
-    zombiyi</color> etkisiz hale getir.\r\n\n<color=#FF3333><b>Level 2:</b></color>
+    zombiyi</color> etkisiz hale getir.\r\n\r\n<color=#FF3333><b>Level  :</b></color>
     Dikkat et! Orman\u0131n karanl\u0131\u011F\u0131nda; daha dayan\u0131kl\u0131,
     daha h\u0131zl\u0131 ve daha tehlikeli olan <color=#FF0000><b>Mutant Zombiler</b></color>
     pusu kurmu\u015F durumda. B\xF6l\xFCm\xFC ge\xE7mek i\xE7in <color=#FFCC00>10
-    tane mutantu</color> temizlemelisin.\n\r\n<color=#33FFFF><b>Taktik:</b></color>
+    tane mutantu</color> temizlemelisin.\r\n\r\n<color=#FF9900><b>Patlay\u0131c\u0131
+    Variller:</b></color> Haritadaki <color=#FFCC00>k\u0131rm\u0131z\u0131 varilleri
+    ve gaz t\xFCplerini</color> patlatarak zombilere y\xFCksek hasar verebilirsin!
+    Ama dikkat et, patlama alan\u0131ndaysan <color=#FF3333>sen de hasar al\u0131rs\u0131n!</color>\r\n\r\n<color=#33FFFF><b>Taktik:</b></color>
     Zombiler yakla\u015Ft\u0131k\xE7a gerilim m\xFCzi\u011Fi h\u0131zlan\u0131r.
-    Kulakl\u0131\u011F\u0131n\u0131 tak ve m\xFCzi\u011Fin sesini iyi dinle!"
+    Kulakl\u0131\u011F\u0131n\u0131 tak ve m\xFCzi\u011Fin sesini iyi dinle!\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1f8fe66c91dde3841ac99e72925eeb29, type: 2}
   m_sharedMaterial: {fileID: -4383862590563831049, guid: 1f8fe66c91dde3841ac99e72925eeb29,
@@ -257,8 +260,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

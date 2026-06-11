@@ -6836,7 +6836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f78209ee76da99843ae6dcb2c8e09fb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalZombiesToKill: 1
+  totalZombiesToKill: 5
   objectiveText: {fileID: 1293945405}
   winMenuPanel: {fileID: 506797571}
   gameAudioSource: {fileID: 0}
