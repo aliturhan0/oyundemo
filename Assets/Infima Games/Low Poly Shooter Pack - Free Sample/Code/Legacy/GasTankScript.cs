@@ -58,6 +58,14 @@ public class GasTankScript : MonoBehaviour {
 	private bool audioHasPlayed = false;
 	
 	private void Start () {
+		// Sahnedeki hazır AudioSource bileşeninin otomatik ses çalmasını engelle
+		AudioSource existingSource = GetComponent<AudioSource>();
+		if (existingSource != null)
+		{
+			existingSource.playOnAwake = false;
+			existingSource.Stop();
+		}
+
 		//Make sure the light is off at start
 		if (lightObject != null) lightObject.intensity = 0;
 		//Get a random value for the rotation
